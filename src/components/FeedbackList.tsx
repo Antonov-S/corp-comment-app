@@ -1,27 +1,46 @@
+import { useEffect, useState } from "react";
 import FeedbackItem from "./FeedbackItem";
-
-const feedbackItems = [
-  {
-    upvoteCount: 411,
-    badgeLetter: "S",
-    companyName: "Starbucks",
-    text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
-    daysAgo: 5
-  },
-  {
-    upvoteCount: 312,
-    badgeLetter: "SA",
-    companyName: "SAntonov",
-    text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit test",
-    daysAgo: 2
-  }
-];
+import Spinner from "./Spinner";
+import ErrorMessage from "./ErrorMessage";
+import { API_ADDRESS } from "../lib/constants";
 
 export default function FeedbackList() {
+  const [feedbackItems, setFeedbackItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    const fetchFeedbackItems = async () => {
+      setIsLoading(true);
+
+      try {
+        const response = await fetch(API_ADDRESS);
+
+        if (!response.ok) {
+          throw new Error();
+        }
+
+        const data = await response.json();
+        console.log(data);
+
+        setFeedbackItems(data.feedbacks);
+      } catch (error) {
+        setErrorMessage("Something went wrong. Please try again later.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchFeedbackItems();
+  }, []);
   return (
     <ol className="feedback-list">
+      {isLoading && <Spinner />}
+
+      {errorMessage && <ErrorMessage message={errorMessage} />}
+
       {feedbackItems.map(feedbackItem => (
-        <FeedbackItem feedbackItem={feedbackItem} />
+        <FeedbackItem key={feedbackItem?.id} feedbackItem={feedbackItem} />
       ))}
     </ol>
   );

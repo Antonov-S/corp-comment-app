@@ -5,7 +5,7 @@ import ErrorMessage from "./ErrorMessage";
 import { API_ADDRESS } from "../lib/constants";
 
 export default function FeedbackList() {
-  const [feedbackItems, setFeedbackItems] = useState([]);
+  const [feedbackItems, setFeedbackItems] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -40,7 +40,7 @@ export default function FeedbackList() {
       {errorMessage && <ErrorMessage message={errorMessage} />}
 
       {feedbackItems.map(feedbackItem => (
-        <FeedbackItem key={feedbackItem?.id} feedbackItem={feedbackItem} />
+        <FeedbackItem key={feedbackItem.id} feedbackItem={feedbackItem} />
       ))}
     </ol>
   );

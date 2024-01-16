@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { MAX_CHARACTERS } from "../lib/constants";
 
-export default function FeedbackForm() {
-  const [text, setNewText] = useState("");
+type FeedbackFormProps = {
+  onAddToList: (text: string) => void;
+};
+
+export default function FeedbackForm({ onAddToList }: FeedbackFormProps) {
+  const [text, setText] = useState("");
   const charactersLeft = MAX_CHARACTERS - text.length;
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -10,11 +14,17 @@ export default function FeedbackForm() {
     if (MAX_CHARACTERS - newText.length < 0) {
       return;
     }
-    setNewText(newText);
+    setText(newText);
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    onAddToList(text);
+    setText("");
   };
 
   return (
-    <form className="form">
+    <form className="form" onSubmit={handleSubmit}>
       <textarea
         id="feedback-textarea"
         placeholder="blabla"

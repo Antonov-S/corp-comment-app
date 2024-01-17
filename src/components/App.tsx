@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import Container from "./layout/Container";
-import HashtagList from "./HashtagList";
+import HashtagList from "./hashtag/HashtagList";
 import Footer from "./layout/Footer";
 
 import { TFeedbackItem } from "../lib/types";
@@ -39,6 +39,13 @@ function App() {
     });
   };
 
+  const companyList = feedbackItems
+    .map(company => company.company)
+    .map(companyName => companyName.toUpperCase())
+    .filter(
+      (companyName, index, array) => array.indexOf(companyName) === index
+    );
+
   useEffect(() => {
     const fetchFeedbackItems = async () => {
       setIsLoading(true);
@@ -74,7 +81,7 @@ function App() {
         handleAddToList={handleAddToList}
       />
 
-      <HashtagList />
+      <HashtagList companyList={companyList} />
     </div>
   );
 }

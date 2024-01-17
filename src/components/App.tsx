@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
-import Container from "./Container";
+import Container from "./layout/Container";
 import HashtagList from "./HashtagList";
-import Footer from "./Footer";
+import Footer from "./layout/Footer";
 
 import { TFeedbackItem } from "../lib/types";
 import { API_ADDRESS } from "../lib/constants";

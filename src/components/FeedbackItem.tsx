@@ -19,7 +19,7 @@ export default function FeedbackItem({ feedbackItem }: FeedmackItemProps) {
       </div>
 
       <div>
-        <p>{feedbackItem.companyName}</p>
+        <p>{feedbackItem.company}</p>
         <p>{feedbackItem.text}</p>
       </div>
 

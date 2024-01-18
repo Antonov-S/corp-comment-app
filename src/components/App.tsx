@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import Container from "./layout/Container";
 import HashtagList from "./hashtag/HashtagList";
@@ -13,11 +13,15 @@ function App() {
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedCompany, setSelectedCompany] = useState("");
 
-  const filteredfeedbackItems = selectedCompany
-    ? feedbackItems.filter(
-        item => item.company.toUpperCase() === selectedCompany
-      )
-    : feedbackItems;
+  const filteredfeedbackItems = useMemo(
+    () =>
+      selectedCompany
+        ? feedbackItems.filter(
+            item => item.company.toUpperCase() === selectedCompany
+          )
+        : feedbackItems,
+    [feedbackItems, selectedCompany]
+  );
 
   const handleSelectCompany = (company: string) => {
     setSelectedCompany(company);
@@ -50,12 +54,16 @@ function App() {
     });
   };
 
-  const companyList = feedbackItems
-    .map(company => company.company)
-    .map(companyName => companyName.toUpperCase())
-    .filter(
-      (companyName, index, array) => array.indexOf(companyName) === index
-    );
+  const companyList = useMemo(
+    () =>
+      feedbackItems
+        .map(company => company.company)
+        .map(companyName => companyName.toUpperCase())
+        .filter(
+          (companyName, index, array) => array.indexOf(companyName) === index
+        ),
+    [feedbackItems]
+  );
 
   useEffect(() => {
     const fetchFeedbackItems = async () => {

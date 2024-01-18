@@ -11,12 +11,17 @@ export default function FeedbackItem({ feedbackItem }: FeedmackItemProps) {
   const [open, setOpen] = useState(false);
   const [upvoteCount, setUpvoteCount] = useState(feedbackItem.upvoteCount);
 
+  const hadleUpvote = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setUpvoteCount(prev => ++prev);
+    e.stopPropagation();
+  };
+
   return (
     <li
       className={`feedback ${open ? "feedback--expand" : ""}`}
       onClick={() => setOpen(prev => !prev)}
     >
-      <button onClick={() => setUpvoteCount(prev => ++prev)}>
+      <button onClick={hadleUpvote}>
         <TriangleUpIcon />
         <span>{upvoteCount}</span>
       </button>

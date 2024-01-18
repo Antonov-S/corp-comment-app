@@ -13,6 +13,7 @@ export default function FeedbackItem({ feedbackItem }: FeedmackItemProps) {
 
   const hadleUpvote = (e: React.MouseEvent<HTMLButtonElement>) => {
     setUpvoteCount(prev => ++prev);
+    e.currentTarget.disabled = true;
     e.stopPropagation();
   };
 

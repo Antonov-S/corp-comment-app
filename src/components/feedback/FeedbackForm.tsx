@@ -51,8 +51,8 @@ export default function FeedbackForm({ onAddToList }: FeedbackFormProps) {
       />
 
       <label htmlFor="feedback-textarea">
-        Enter your feedback here, remember to #hashtag the company and the text
-        must be at least 5 characters long
+        Enter your feedback here, remember to add #hashtag the company and the
+        text must be at least 5 characters long.
       </label>
 
       <div>
